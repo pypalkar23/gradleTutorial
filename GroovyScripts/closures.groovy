@@ -27,3 +27,47 @@ Closure echoWithMultiParam={x,y,z->
 
 println echoWithMultiParam("a","b","c")
 //prints strings as well as returns value 4
+
+def fibonacciPrint(){
+    Integer prev=1
+    Integer current=1
+
+    def inner={
+        Integer temp=prev
+        prev = current
+        current = current + temp
+        temp
+    }
+
+}
+
+printFib= fibonacciPrint()
+println printFib()
+println printFib()
+println printFib()
+def temp = 5
+println printFib()
+
+class Person{
+    String theName
+    Integer theAge
+
+    Person(theName,theAge){
+        this.theName = theName
+        this.theAge = theAge
+    }
+
+    def executeInside(Closure c){
+        c.delegate = this
+        c()
+    }
+}
+
+def p1= new Person("Mandar",26)
+def a=p1. executeInside({
+    println theName
+})
+def theName="dipesh"
+a()
+theName="sfSf"
+a()
