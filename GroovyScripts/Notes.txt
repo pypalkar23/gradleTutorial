@@ -18,3 +18,4 @@ See properties.groovy for reference
 Closures very much similar to Javascript. Closures runs in the current context
 for example a closure declared in a class when called from outside from the class can take the value of a variable declared after the 
 class scope and has a same name as the instance variable declared inside the class.
+

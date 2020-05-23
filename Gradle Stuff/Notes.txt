@@ -1,0 +1,19 @@
+6 Main Interfaces
+-Script
+-Project
+-Gradle
+-Settings
+-Task
+-Action
+
+These interfaces implements methods and properties e.g logger,resources which can be used while building
+your own gradle Script
+
+Gradle lifecycle Phases
+-Initialization - scripts in init.d folder of .gradle, init.gradle, settings.gradle
+-Configuration - build.gradle
+-Execution - build.gradle
+
+-Every property declared in the Initialization can be used throughout the gradle lifecycle
+-files placed in .gradle/init.d runs in an alphabetical order of their name (check eclipse/gradlestart project for the same)
+
