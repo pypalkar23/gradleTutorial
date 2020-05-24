@@ -1,4 +1,47 @@
-defaultTasks 'hello'
+/*defaultTasks 'hello'
 task('hello').doLast{
 	println "Hello World"
+}*/
+
+logger.info "printing info >>>> gradle version: $project.gradle.gradleVersion"
+logger.info "printing info >>>> gradle directory: $project.gradle.gradleHomeDir"
+logger.info "printing info >>>> name of the buildfile: $project.buildFile"
+logger.info "printing info >>>> name of the buildfile: $project.projectDir"
+logger.info "printing info >>>> name of the buildfile: ${project.relativePath(project.buildFile)}" // since a expression is evalueted here
+//its necessary to enclose it in curly brackets
+
+//the above lines can be also written as build scripts implicitly delegates to "project" object/interface
+logger.info "printing info >>>> gradle version: $gradle.gradleVersion"
+logger.info "printing info >>>> gradle directory: $gradle.gradleHomeDir"
+logger.info "printing info >>>> name of the buildfile: $buildFile"
+logger.info "printing info >>>> name of the buildfile: $projectDir"
+logger.info "printing info >>>> name of the buildfile: ${relativePath(buildFile)}"
+
+//accessing property from a property file
+if(project.hasProperty('projectOwnerName')){
+	logger.info "Project was created by $project.projectOwnerName"
+}
+else
+{
+	logger.info "Can't find the owner"
+}
+
+//accessing property set from a command file
+if(project.hasProperty('commandLineSampleProp')){
+	logger.info "Project was created by $project.commandLineSampleProp"
+}
+else
+{
+	logger.info "Can't figure out what was the property set by cmd"
+}
+
+project.ext.udemyCourse="The Gradle Masterclass"
+
+//accessing property set in the script itself
+if(project.hasProperty('udemyCourse')){
+	logger.info "Project was created for $project.udemyCourse"
+}
+else
+{
+	logger.info "Can't figure out what was the udemyCourse"
 }

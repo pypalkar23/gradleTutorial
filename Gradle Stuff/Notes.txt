@@ -1,4 +1,4 @@
-6 Main Interfaces
+6 Main Interfaces(Objects)
 -Script
 -Project
 -Gradle
@@ -15,5 +15,23 @@ Gradle lifecycle Phases
 -Execution - build.gradle
 
 -Every property declared in the Initialization can be used throughout the gradle lifecycle
--files placed in .gradle/init.d runs in an alphabetical order of their name (check eclipse/gradlestart project for the same)
+-files placed in ${USER_HOME_DIRECTORY}/.gradle/init.d runs in an alphabetical order of their name (check eclipse/gradlestart project for the same)
 
+Gradle Object Model
+-Gradle is the top level object which every other object e.g project,settings,script etc implements.
+-A script running in Initialization phase can delegate to gradle object.
+-Every build script running in Configuration phase instantiates a script object which inturn delegates to another object which depends on the phase in 
+ which it runs.
+-If a build script is running in configuration phase it delegates to project object.
+-In case of a multiproject build a script also settings object as settings.gradle is the file where the list of projects 
+incorporated in the build.The scripts contained in those projects in turn delegate to project object.
+-If a script delegates particular object it's delegation is implied i.e if a script is delegating to project then the property "$project.buildFile"
+ can be referred just as "$buildFile"
+ For more examples refer build.gradle of minGradleRequirements
+
+Properties
+- gradle domain objects(Script,Project,Settings) have properties on their own.In addition to that user defined properties can be defined in three ways
+1) Define properties in gradle.properties file in key=value format,this properties are accessible in both build.gradle as well as settings.gradle
+2) Pass the properties through gradle command with ahead of command line option -P e.g gradle -PsampleProperty=sampleValue (no space between -P and argument declaration, strange :P)
+3) Declare the property in the gradle script itself e.g a timestamp value for project can be set using property such as 
+`project.ext.timestamp= some value or closure` in the build script of that project.
