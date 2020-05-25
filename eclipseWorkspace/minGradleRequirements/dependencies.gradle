@@ -1,0 +1,68 @@
+//defaultTasks 'firstTask','secondTask','doSomethingInMiddle','finalTask' //<-- One way of running the multiple tasks
+defaultTasks 'finalTask'
+
+task ainvayiTask {
+ 	doLast{
+         logger.info "-----some other task is conditionally dependent on this task"   
+     }
+}
+
+task firstTask {
+	doLast{
+        logger.info "------first task of the script"  
+     }
+}
+
+//single dependency declaration
+task secondTask (dependsOn:'firstTask' ) {
+	doLast{
+         logger.info "----------Second task of the script" 
+     }
+	
+}
+
+task doSomethingInMiddle {
+	doLast{
+         logger.info "-----------Just does something in middle"
+     }
+}
+
+//multidependency declaration with task declaration 
+task finalTask (dependsOn:['secondTask','doSomethingInMiddle']) {
+	doLast{
+         logger.info "-----------final task of the project"   
+     }
+}
+
+//another way of dependency declaration **note the absence of 
+doSomethingInMiddle.dependsOn firstTask,secondTask
+
+//conditional task dependency
+if(Math.random() < 0.5){
+      firstTask.dependsOn ainvayiTask         
+}
+
+//hooks into the graph creation process
+project.gradle.taskGraph.whenReady { taskGraph ->
+	if(taskGraph.hasTask(ainvayiTask)){
+		project.version = '1.0'
+	} 
+	else{
+	    project.version = '1.0-SNAPSHOT'
+	}
+
+}
+
+project.gradle.taskGraph.beforeTask { task ->
+   logger.info "****Before executing of $task.name"
+}
+
+project.gradle.taskGraph.afterTask { task ->
+   logger.info "*****After executing of $task.name"
+}
+
+
+
+	
+
+

@@ -45,3 +45,38 @@ else
 {
 	logger.info "Can't figure out what was the udemyCourse"
 }
+
+
+task hi;
+//can write as project.hi as well but delegation to project is implied as tasks are part of configuration and execution phase
+hi.doFirst {
+	logger.info "hi"
+}
+
+//another way of assigning all to task in one place
+
+task hello {
+	description="says hello"
+	group = "welcome"
+	doFirst {
+		logger.info "this is $name task's action and 1st action of the task"
+	}
+	
+	doLast {
+		logger.info "this is $name task's action and 2nd action of the task"
+	}
+}
+
+logger.info "Description of the hello task $hello.description and group is $hello.group"
+
+//action chaining
+task helloChained
+helloChained.doFirst {
+	logger.info "this is $name task's action and 1st action of the task"
+}.doLast {
+	logger.info "this is $name task's action and 2nd action of the task"
+}.doLast {
+	logger.info "this is $name task's action and 3rd action of the task"
+}.doLast {
+	logger.info "this is $name task's action and 4th action of the task"
+}

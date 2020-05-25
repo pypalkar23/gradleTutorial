@@ -35,3 +35,46 @@ Properties
 2) Pass the properties through gradle command with ahead of command line option -P e.g gradle -PsampleProperty=sampleValue (no space between -P and argument declaration, strange :P)
 3) Declare the property in the gradle script itself e.g a timestamp value for project can be set using property such as 
 `project.ext.timestamp= some value or closure` in the build script of that project.
+
+Tasks
+A project in gradle i.e build script is collection of Tasks 
+Tasks are created and configured in configuration Phase.
+A Task is in turn a collection of one or more actions
+Task interface provides two methods to pass actions in forms of methods or closures.
+Two ways to add actions to a task via doFirst(),doLast()
+doFirst- Adds task at the top of action list of a task
+doLast - Adds task at the end of action list of a task
+Action chaining is allowed , just like chaining of then in promises of Javascript
+
+e.g sample_task.doFirst{}
+    .doLast{}
+    .doLast{}
+    .doLast{}
+
+Task Dependencies-
+Way to run multiple tasks
+1) Define 'defaultTasks' at the top of the file.The syntax for the same is
+defaultTasks 'task1','task2' 
+**the task names should be enclose in quotes
+2) DependsOn keyword:
+One can define the dependency of task 2 on task 1 as follows
+task1 (dependsOn: 'task1') in case of singleTaskDependency
+task2 (dependsOn: ['task1','task2'...,'taskn']) in case of multi task dependency
+
+OR 
+
+task1.dependsOn = task2,task3,..,taskn
+***there are no semicolons here
+
+if two or more task are dependent on a particular task, that task still gets executed only once,because of the taskDependencyGraph
+that gradle builds internally.
+
+Hook into Task dependency:-
+- The interface gradle.taskGraph provides many methods that can be used to hook into the graph creation process when it happens 
+during configuration process. (see dependencies.gradle for reference)
+
+
+
+
+
+
