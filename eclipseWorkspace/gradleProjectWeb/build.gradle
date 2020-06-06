@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group = 'denofprogramming'
+version = '1.0'
+project.ext.tomcatWebapps='/opt/tomcat9/webapps'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories{
+    mavenCentral()
+}
+
+dependencies{
+    implementation 'org.springframework:spring-webmvc:4.0.3.RELEASE'
+    implementation 'javax.inject:javax.inject:1'
+    implementation 'org.apache.commons:commons-math3:3.2'
+    implementation 'jstl:jstl:1.2'
+    implementation 'log4j:log4j:1.2.17'
+    
+    compileOnly 'javax.servlet:javax.servlet-api:3.0.1'
+    testImplementation 'junit:junit:4.11'
+}
+
+war {
+    archiveName = 'mywebapp.war'
+}
+
+task deployWar(type: Copy, dependsOn : 'war'){
+	from war
+	into "$tomcatWebapps"                
+}
+
+
+
+
