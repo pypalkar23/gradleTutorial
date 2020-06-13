@@ -23,7 +23,7 @@ jar {
      	  'Created-by':'Mandar',
      	  'Main-class':'com.denofprogramming.random.App'
     }
-    
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
     from{
         project.configurations.runtimeClasspath.collect {File file-> project.zipTree(file) }
     }
